@@ -7,7 +7,6 @@ module.exports = function(api, options) {
     visitor: {
       Program: {
         enter(path, state) {
-            console.log('开始处理main.js')
           // 遍历所有ImportDeclaration是否引入国际化的包
           path.traverse({
             ImportDeclaration(p) {

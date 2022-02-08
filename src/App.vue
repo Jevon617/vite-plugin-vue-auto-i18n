@@ -9,8 +9,11 @@ const a = ref(1)
 </script>
 
 <template>
-    <HelloWorld msg="Hello Vue 112 + Vite" />
+    <HelloWorld :msg="/* __i18n__ */`Vue1 哈哈哈哈`" />
     <TestInfo />
+    <div>123123</div>
+    {{ /** __i18n__ */'我是油桶啊' }}
+    <div>{{ /** __i18n__ */'我是油桶啊11' }}</div>
 </template>
 
 <style>

@@ -2,9 +2,9 @@
 import { ref, defineComponent, getCurrentInstance } from 'vue'
 import TestInfoVue from './TestInfo.vue'
 export default defineComponent({
-    components: {
-        TestInfoVue
-    },
+  components: {
+    TestInfoVue
+  },
   props: {
     msg: String
   },
