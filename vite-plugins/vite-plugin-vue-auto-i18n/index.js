@@ -40,7 +40,7 @@ export default function myPlugin(options = {}) {
     }
 
     filePaths.forEach(filePath=> {
-      if (filePath.endsWith('App.vue')) {
+      if (filePath.endsWith('.vue')) {
         fileCount ++ // 统计vue文件数量
         const code = fs.readFileSync(filePath, 'utf-8')
         const compileScript = compilerSfc.compileScript
@@ -53,7 +53,6 @@ export default function myPlugin(options = {}) {
         const toTransform = descriptor.scriptSetup
           ? scriptContent
           : compilerDom.compile(descriptor.template && descriptor.template.content || '', { mode: 'module' }).code.replace('export', '')
-        console.log(toTransform)
 
         const ast = babel.parseSync(toTransform, {
           sourceType: "unambiguous",

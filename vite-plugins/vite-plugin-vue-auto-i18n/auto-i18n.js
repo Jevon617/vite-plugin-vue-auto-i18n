@@ -37,12 +37,14 @@ module.exports = function(api, options) {
     })
   }
 
-
-
   const transformStaticNodeToDyamicNode = p=> {
     p.findParent(parent=>{
       if (parent.isCallExpression() && (parent.node.callee.name === '_createElementVNode' || parent.node.callee.name === '_createTextVNode' || parent.node.callee.name === 'createBaseVNode')) {
-        parent.node.arguments.push(api.types.NumericLiteral(1))
+        if (parent.node.arguments.length >=4) {
+          parent.node.arguments.splice(3, 1, api.types.NumericLiteral(1))
+        } else {
+          parent.node.arguments.push(api.types.NumericLiteral(1))
+        }
       } else if (p.parentPath.isObjectProperty() && parent.isCallExpression() && parent.node.callee.name === '_createVNode') {
         //  createVNode(_component_TestInfoVue, { msg: _ctx.test }, null, 8, ["msg"])
         let arg2 = parent.node.arguments[2] === undefined ? api.types.NullLiteral() : parent.node.arguments[2]
