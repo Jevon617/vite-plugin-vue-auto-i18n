@@ -10,7 +10,7 @@ export default defineComponent({
   },
   setup() {
     const test = ref(1)
-    const name = /* __i18n__ */'我的天呐'
+    const name = /* __i18n__ */'我的天呐1111'
     const count = ref(/* __i18n__ */'见到你太高兴了')
     const placeholder = ref(/* __i18n__ */`你好,${name}, ${count.value}`)
     const ctx = getCurrentInstance()
@@ -50,7 +50,7 @@ export default defineComponent({
     <TestInfoVue :msg="/* __i18n__ */`Vue1 哈哈哈哈${test}`" b="2" :a="test" />
 
 
-    <TestInfoVue :msg="/* __i18n__ */`Vue3 哈哈哈哈`" />
+    <TestInfoVue :msg="/* __i18n__ */`Vue3 哈哈哈哈zzzzxxxxx`" />
 
     <TestInfoVue :msg="/* __i18n__ */`Vue3 文档`">{{ {a: /* __i18n__ */`Vue1也是一款好工具啊`} }}</TestInfoVue>
 

@@ -84,7 +84,6 @@ module.exports = function(api, options) {
                   if(parent.isVariableDeclarator() && parent.node.id.name.startsWith('_hoisted')) {
                     const id = parent.get('id')
                     const name = id.node.name
-                    console.log(name)
                     id.scope.bindings[name].referencePaths[0].replaceWith(parent.get('init').node)
                     parent.stop()
                     parent.remove()
@@ -151,6 +150,12 @@ module.exports = function(api, options) {
     },
     post(file) {
       const record = file.get('record')
+
+      // 没有字段则不保存为文件
+      if (!Object.keys(record).length) {
+        return options.clear && options.clear()
+      }
+
       const source = JSON.stringify(record)
       write(source, options.locale, options)
 

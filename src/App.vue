@@ -9,11 +9,11 @@ const a = ref(1)
 </script>
 
 <template>
-    <HelloWorld :msg="/* __i18n__ */`Vue1 哈哈哈哈`" />
+    <HelloWorld :msg="/* __i18n__ */`Vuzxxzze1222 哈22哈哈哈xxx`" />
     <TestInfo />
-    <div>123123</div>
-    {{ /** __i18n__ */'我是笨蛋啊啊' }}
-    <div>{{ /** __i18n__ */'我是油桶啊,你是笨蛋啊' }}</div>
+    <div>z1xxxxxx</div>
+    {{ /** __i18n__ */'xxxx1xxxxxxxxxzzzzzzxxxxzzzzzz我是你的重中之重下下下下' }}
+    <div>{{ /** __i18n__ */'我是一个十分有趣的人哈哈哈哈' }}</div>
 </template>
 
 <style>

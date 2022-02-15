@@ -9,11 +9,12 @@ import autoI18n from './vite-plugins/vite-plugin-vue-auto-i18n/index'
 export default defineConfig({
   plugins: [
     vue(),
-    vueI18n({ include: path.resolve(__dirname, './locales/**')}),
-    autoI18n()
+    autoI18n(),
+    vueI18n({ include: path.resolve(__dirname, './locales/**')})
   ],
   build: {
     minify: false
   },
+
   base: '/dist'
 })
