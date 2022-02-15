@@ -17,7 +17,7 @@ export default defineComponent({
     const changeLang = ()=> {
       // name.value = /* __i18n__ */'真难过啊'
       test.value = 2
-      ctx.appContext.app.config.globalProperties.$changeLocale('jp')
+      ctx.appContext.app.config.globalProperties.$changeLocale('kor')
     }
     //  createVNode(_component_TestInfoVue, { msg: _ctx.test }, null, 8, ["msg"])
     return {

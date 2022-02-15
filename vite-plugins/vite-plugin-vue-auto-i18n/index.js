@@ -14,18 +14,21 @@ export default function myPlugin(options = {
   locales : ['zh', 'en', 'kor', 'jp']
 }) {
 
-  let key = 0
   let isProduction = false
   const fileRegex = /\.vue$/
   const inputFileId = options.entry || 'main.js'
   const input = options.input || path.resolve(process.cwd(), './src')
 
-  const generateKey = ()=> {
-    key ++
-    return `i18n${key}`
-  }
+
 
   const transformVueTemplate = (code, clear)=> {
+
+    let key = 0
+    const generateKey = ()=> {
+      key ++
+      return `i18n${key}`
+    }
+
     const compileScript = compilerSfc.compileScript
     const descriptor = compilerSfc.parse(code).descriptor || {}
     // 区分script-setup语法和普通语法
