@@ -1,23 +1,30 @@
 <script>
 import { ref, computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
-const __script = defineComponent({
+export default defineComponent({
   props: {
-    msg: String
+    msg: String,
+    a: Number,
+    b: Number
   },
   setup() {
-    const a = 1
 
     return {
-      a
     }
   }
 })
 
-__script.render = function() {
-  return 1
-}
-
-export default __script
 
 </script>
+
+<template>
+    <div>z1xxxxxx</div>
+    {{ /** __i18n__ */'xxxx1xxxxxxxxxzzzzzzxxxxzzzzzz我是你的重中之重下下下下' }}
+    <div>{{ /** __i18n__ */'我是一个十分有趣的人哈哈哈哈,我是你的爱人' }}</div>
+</template>
+
+<style scoped>
+a {
+  color: #42b983;
+}
+</style>

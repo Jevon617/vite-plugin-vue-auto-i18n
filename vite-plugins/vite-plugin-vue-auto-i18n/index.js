@@ -19,8 +19,6 @@ export default function myPlugin(options = {
   const inputFileId = options.entry || 'main.js'
   const input = options.input || path.resolve(process.cwd(), './src')
 
-
-
   const transformVueTemplate = (code, clear)=> {
 
     let key = 0
@@ -46,7 +44,7 @@ export default function myPlugin(options = {
       babelrc: false
     })
     const transformObj = babel.transformFromAstSync(ast, toTransform, {
-      plugins: [[autoI18n, {...options, clear, generateKey, isScriptSetup: !!descriptor.scriptSetup}]],
+      plugins: [[autoI18n, {...options, clear, generateKey, isScriptSetup: !!descriptor.scriptSetup, isMain: !!clear}]],
       configFile: false, // 不读取根目录下的babel配置
       babelrc: false
     })
@@ -99,6 +97,9 @@ export default function myPlugin(options = {
   }
 
   return {
+    // 优化点: 第一次生成json语言包, vite会page reload,
+    // 而后每次读取一个vue文件之后便会更新语言包, 从而多次page reload
+    // 优化方案: 每次读取vue文件之后, 先在内存中缓存此次的语言包,等所有vue文件都编译完成之后, 统一生成语言包
     name: 'vite-plugin-vue-auto-i18n',
     enforce: 'pre',
     config(_, { command }) {
@@ -133,10 +134,15 @@ export default function myPlugin(options = {
     },
     async transform(code, id) {
       if (fileRegex.test(id)) {
+        console.log('transform', id)
+
         return {
           code: transformVueTemplate(code)
         }
       }
+    },
+    closeBundle() {
+      console.log('end')
     }
   }
 }

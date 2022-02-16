@@ -2,7 +2,7 @@
 const generate = require('@babel/generator').default
 const md5 = require('js-md5')
 const request = require('request')
-const { write } = require('./utlis')
+const { write, deboundceWrite } = require('./utlis')
 
 module.exports = function(api, options) {
 
@@ -149,6 +149,7 @@ module.exports = function(api, options) {
       }
     },
     post(file) {
+      const writeFile = options.isMain ? write : deboundceWrite
       const record = file.get('record')
 
       // 没有字段则不保存为文件
@@ -157,7 +158,7 @@ module.exports = function(api, options) {
       }
 
       const source = JSON.stringify(record)
-      write(source, options.locale, options)
+      writeFile(source, options.locale, options)
 
       const toTransformLocales = options.locales.filter(locale => locale !== options.locale)
       Promise.all(toTransformLocales.map(lang=> translate(record, lang))).then(resArr=> {
@@ -168,7 +169,7 @@ module.exports = function(api, options) {
             copy[item] = res[index].dst
           })
           const source = JSON.stringify(copy)
-          write(source, lang, options)
+          writeFile(source, lang, options)
         })
         options.clear && options.clear()
       })
