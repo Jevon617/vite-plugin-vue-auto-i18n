@@ -16,29 +16,31 @@ let timer = null
 let cacheMap = {}
 
 exports.deboundceWrite = (source, lang, options)=> {
-  if (timer) clearTimeout(timer)
-
-  const targetPath = path.resolve(options.output, lang + '.json')
-  if (!cacheMap[targetPath]) {
-    cacheMap[targetPath] = JSON.parse(source)
-  } else {
-    cacheMap[targetPath] = Object.assign(cacheMap[targetPath], JSON.parse(source))
-  }
-
-  timer = setTimeout(()=> {
-    for (let targetPath in cacheMap) {
-      let source = JSON.stringify(cacheMap[targetPath])
-
-      if (fs.existsSync(targetPath)) {
-        fs.writeFileSync(targetPath, source)
-      } else {
-        fs.ensureFileSync(targetPath, source)
-        fs.writeFileSync(targetPath, source)
-      }
+  try {
+    if (timer) clearTimeout(timer)
+    const targetPath = path.resolve(options.output, lang + '.json')
+    if (!cacheMap[targetPath]) {
+      cacheMap[targetPath] = JSON.parse(source)
+    } else {
+      Object.assign(cacheMap[targetPath], JSON.parse(source))
     }
-    cacheMap = {}
-    timer = null
-  }, 300)
+
+    timer = setTimeout(()=> {
+      for (let targetPath in cacheMap) {
+        let source = JSON.stringify(cacheMap[targetPath])
+
+        if (fs.existsSync(targetPath)) {
+          fs.writeFileSync(targetPath, source)
+        } else {
+          fs.ensureFileSync(targetPath, source)
+          fs.writeFileSync(targetPath, source)
+        }
+      }
+      timer = null
+    }, 1000)
+  } catch(e){
+    console.log(e)
+  }
 }
 
 exports.write = (source, lang, options)=> {
@@ -52,30 +54,6 @@ exports.write = (source, lang, options)=> {
     fs.ensureFileSync(targetPath, source)
     fs.writeFileSync(targetPath, source)
   }
-
-  // if (timer) clearTimeout(timer)
-
-  // const targetPath = path.resolve(options.output, lang + '.json')
-  // if (!cacheMap[targetPath]) {
-  //   cacheMap[targetPath] = JSON.parse(source)
-  // } else {
-  //   cacheMap[targetPath] = Object.assign(cacheMap[targetPath], JSON.parse(source))
-  // }
-
-  // timer = setTimeout(()=> {
-  //   for (let targetPath in cacheMap) {
-  //     let source = JSON.stringify(cacheMap[targetPath])
-
-  //     if (fs.existsSync(targetPath)) {
-  //       fs.writeFileSync(targetPath, source)
-  //     } else {
-  //       fs.ensureFileSync(targetPath, source)
-  //       fs.writeFileSync(targetPath, source)
-  //     }
-  //   }
-  //   cacheMap = {}
-  //   timer = null
-  // }, 500)
 }
 
 const readDir = async (input, ret=[])=> {

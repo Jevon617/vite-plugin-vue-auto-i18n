@@ -41,7 +41,7 @@ module.exports = function(api, options) {
             const ${state.vueI18n} = ${state.createI18n}({
               legacy: false,
               globalInjection: true,
-              locale: ${options.locale},
+              locale: '${options.locale}',
               messages: {
                 ${options.locales.join(',')}
               }

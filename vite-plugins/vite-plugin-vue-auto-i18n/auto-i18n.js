@@ -156,7 +156,6 @@ module.exports = function(api, options) {
       if (!Object.keys(record).length) {
         return options.clear && options.clear()
       }
-
       const source = JSON.stringify(record)
       writeFile(source, options.locale, options)
 
@@ -166,7 +165,7 @@ module.exports = function(api, options) {
           const lang = toTransformLocales[i]
           const copy = Object.assign({}, record)
           Object.keys(copy).forEach((item, index)=> {
-            copy[item] = res[index].dst
+            copy[item] = res && res[index] && res[index].dst || copy[item]
           })
           const source = JSON.stringify(copy)
           writeFile(source, lang, options)
